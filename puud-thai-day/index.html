@@ -139,7 +139,12 @@
           <span aria-hidden="true">🔊</span> <span class="th">สวัสดี</span>
         </button>
       </div>
-      <p class="warn" id="voice-warn" hidden data-i18n="voiceWarn">No Thai voice found in this browser. Chrome or Edge on desktop usually has one.</p>
+      <div class="voice-status" id="voice-status" hidden>
+        <span class="dot" id="voice-dot"></span>
+        <span class="voice-name mono" id="voice-name"></span>
+        <span class="voice-badge mono" id="voice-badge"></span>
+      </div>
+      <p class="warn" id="voice-warn" hidden></p>
     </div>
 
     <div class="actions actions--sticky">
@@ -180,6 +185,7 @@
       <button class="btn btn--speak" id="btn-speak" type="button" hidden>
         <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-speaker" /></svg>
         <span data-i18n="hearIt">Hear it</span>
+        <kbd class="kbd">S</kbd>
       </button>
     </div>
 
@@ -188,6 +194,11 @@
     <div class="reveal" id="reveal" hidden>
       <div class="reveal-verdict" id="reveal-verdict"></div>
       <div class="reveal-card phrase" id="reveal-card"></div>
+      <button class="btn btn--speak btn--sm" id="btn-replay" type="button" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-speaker" /></svg>
+        <span data-i18n="hearIt">Hear it</span>
+        <kbd class="kbd">S</kbd>
+      </button>
       <button class="btn btn--primary btn--lg" id="btn-next" type="button">
         <span data-i18n="next">Next</span> <span aria-hidden="true">→</span>
       </button>
@@ -294,6 +305,7 @@
       <section class="set-block">
         <h3 class="set-title" data-i18n="thaiVoice">Thai voice</h3>
         <select class="field" id="voice-select"></select>
+        <p class="panel-hint" id="voice-hint"></p>
         <div class="opt-row">
           <label class="opt-label" data-i18n="speed">Speed</label>
           <input class="range" id="voice-rate" type="range" min="0.5" max="1.2" step="0.05" value="0.9" />
