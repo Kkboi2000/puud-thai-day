@@ -13,6 +13,14 @@ import { renderPhrase, renderOne, SAMPLE_CARD } from './display.js';
 import { buildQuiz, directionLabel, grade } from './quiz.js';
 
 const $ = (s, r = document) => r.querySelector(s);
+
+/**
+ * The DOM is a separate file that users upload by hand, so it can lag behind
+ * the JS. A missing node should degrade one feature, never kill init().
+ */
+const on = (sel, handler) => { const n = $(sel); if (n) n.onclick = handler; return n; };
+const setHidden = (sel, v) => { const n = $(sel); if (n) n.hidden = v; return n; };
+
 const el = (tag, cls, text) => {
   const n = document.createElement(tag);
   if (cls) n.className = cls;
@@ -173,13 +181,13 @@ function wireSetup() {
   $('#btn-setup-back').onclick = () => show('title');
   $('#btn-setup-history').onclick = () => { renderHistory(); show('history'); };
   $('#btn-start').onclick = startRound;
-  $('#btn-voice-test').onclick = async () => {
+  on('#btn-voice-test', async () => {
     const r = await Speech.speak('สวัสดี ยินดีที่ได้รู้จัก', {
       voiceURI: S.settings.voiceURI, rate: S.settings.voiceRate,
     });
     if (r === 'no-voice') toast(I18N.t('vNone'));
     if (r === 'unsupported') toast(I18N.t('vUnsupported'));
-  };
+  });
 }
 
 /** Platform-specific instructions for installing a Thai voice. */
@@ -196,15 +204,16 @@ function voiceHelpKey() {
  * is entirely the device's decision and the user can act on it.
  */
 function renderVoiceStatus() {
-  const st = Speech.status();
-  const box = $('#voice-status');
   const warn = $('#voice-warn');
+  if (!warn) return;                    // older index.html — skip the readout
+
+  const st = Speech.status();
   const off = S.setup.voiceMode === 'off';
 
-  box.hidden = off || st.count === 0;
+  setHidden('#voice-status', off || st.count === 0);
   warn.hidden = off || st.quality === 'network';
 
-  if (st.count > 0) {
+  if (st.count > 0 && $('#voice-name')) {
     $('#voice-name').textContent = st.name;
     const badge = $('#voice-badge');
     badge.textContent = I18N.t(st.quality === 'network' ? 'badgeNeural' : 'badgeBasic');
@@ -304,7 +313,7 @@ function wirePlay() {
   };
   $('#btn-next').onclick = nextQuestion;
   $('#btn-speak').onclick = () => speakCurrent();
-  $('#btn-replay').onclick = () => speakCurrent($('#btn-replay'));
+  on('#btn-replay', () => speakCurrent($('#btn-replay')));
 }
 
 function startRound() {
@@ -346,7 +355,7 @@ function renderQuestion() {
 
   const canSpeak = S.setup.voiceMode !== 'off' && Speech.hasThaiVoice();
   $('#btn-speak').hidden = !canSpeak;
-  $('#btn-replay').hidden = true;
+  setHidden('#btn-replay', true);
   if (canSpeak && (S.setup.voiceMode === 'auto' || q.promptLang === 'audio')) {
     speakCurrent();
   }
@@ -417,7 +426,7 @@ function answer(idx) {
   // audio actually teaches something — do it on every reveal, not just
   // when the question itself was audio.
   const canSpeak = S.setup.voiceMode !== 'off' && Speech.hasThaiVoice();
-  $('#btn-replay').hidden = !canSpeak;
+  setHidden('#btn-replay', !canSpeak);
   if (canSpeak) speakCurrent($('#btn-replay'));
 
   $('#reveal').hidden = false;
@@ -601,13 +610,15 @@ function wireSettings() {
     if (e.target.closest('[data-close]')) closeSettings();
   });
   $('#btn-switch-user').onclick = () => { closeSettings(); show('title'); renderProfileChips(); };
-  $('#voice-select').onchange = (e) => {
+  const voiceSel = $('#voice-select');
+  if (voiceSel) voiceSel.onchange = (e) => {
     S.settings.voiceURI = e.target.value;
     Store.saveSettings(S.settings);
     renderVoiceStatus();
     Speech.speak('สวัสดี ยินดีที่ได้รู้จัก', { voiceURI: S.settings.voiceURI, rate: S.settings.voiceRate });
   };
-  $('#voice-rate').oninput = (e) => {
+  const rate = $('#voice-rate');
+  if (rate) rate.oninput = (e) => {
     S.settings.voiceRate = Number(e.target.value);
     $('#voice-rate-val').textContent = `${S.settings.voiceRate.toFixed(2)}×`;
     Store.saveSettings(S.settings);
@@ -702,10 +713,11 @@ function renderLayerList() {
 
 function renderVoiceSelect() {
   const sel = $('#voice-select');
+  if (!sel) return;
   // Thai only. Offering an English voice for Thai script would just let
   // someone pick an option that produces nonsense.
   const voices = Speech.thaiVoices();
-  const hint = $('#voice-hint');
+  const hint = $('#voice-hint') ?? { textContent: '' };
   sel.textContent = '';
 
   if (!voices.length) {
@@ -724,8 +736,10 @@ function renderVoiceSelect() {
     hint.textContent = I18N.t('vPickHint');
   }
 
-  $('#voice-rate').value = String(S.settings.voiceRate);
-  $('#voice-rate-val').textContent = `${Number(S.settings.voiceRate).toFixed(2)}×`;
+  if ($('#voice-rate')) {
+    $('#voice-rate').value = String(S.settings.voiceRate);
+    $('#voice-rate-val').textContent = `${Number(S.settings.voiceRate).toFixed(2)}×`;
+  }
 }
 
 /* ── keyboard ──────────────────────────────────────────────── */
