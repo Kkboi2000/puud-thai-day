@@ -1,0 +1,28 @@
+{
+  "id": "daily-phrases-03",
+  "title": {
+    "en": "Daily Phrases 3",
+    "jp": "日常フレーズ 3",
+    "th": "วลีในชีวิตประจำวัน 3"
+  },
+  "description": {
+    "en": "Meeting up, running late, and how you're feeling.",
+    "jp": "待ち合わせ・遅刻・体調やきもち。",
+    "th": "การนัดเจอ มาสาย และความรู้สึก"
+  },
+  "level": "beginner",
+  "tags": ["daily", "casual", "meeting-up"],
+  "version": 1,
+  "cards": [
+    { "id": "dp3-01", "jp": "お腹すいた", "en": "I'm hungry", "th": "หิวข้าว", "rom": "hǐw khâao" },
+    { "id": "dp3-02", "jp": "ちょっと遅れる", "en": "I'll be a little late", "th": "จะไปสายนิดนึง", "rom": "cà pai sǎai nít nʉng" },
+    { "id": "dp3-03", "jp": "あと5分で着く", "en": "I'll be there in 5 minutes", "th": "อีก 5 นาทีถึง", "rom": "ìik hâa naa-thii thʉ̌ng" },
+    { "id": "dp3-04", "jp": "私のせいだわ", "en": "It's my fault", "th": "ผิดที่เราเอง", "rom": "phìt thîi rao eeng" },
+    { "id": "dp3-05", "jp": "おごるよ", "en": "My treat", "th": "เดี๋ยวเลี้ยงเอง", "rom": "dǐao líang eeng" },
+    { "id": "dp3-06", "jp": "うらやましい", "en": "I'm jealous", "th": "อิจฉาจัง", "rom": "ìt-chǎa cang" },
+    { "id": "dp3-07", "jp": "疲れた", "en": "I'm tired", "th": "เหนื่อยจัง", "rom": "nʉ̀ai cang" },
+    { "id": "dp3-08", "jp": "忙しい", "en": "I'm busy", "th": "ยุ่งอยู่", "rom": "yûng yùu" },
+    { "id": "dp3-09", "jp": "何だっけ", "en": "What was it again?", "th": "อะไรนะ", "rom": "à-rai ná" },
+    { "id": "dp3-10", "jp": "そう思った", "en": "That's what I thought", "th": "ใช่ป่ะ / ใช่แม๊ะ", "rom": "châi pà / châi mɛ́" }
+  ]
+}

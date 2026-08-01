@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-08-01",
+  "decks": [
+    "decks/daily-phrases-01.json",
+    "decks/daily-phrases-02.json",
+    "decks/daily-phrases-03.json"
+  ]
+}

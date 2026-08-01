@@ -1,0 +1,26 @@
+{
+  "id": "my-new-deck",
+  "title": {
+    "en": "My New Deck",
+    "jp": "新しいデッキ",
+    "th": "ชุดคำศัพท์ใหม่"
+  },
+  "description": {
+    "en": "What this deck covers.",
+    "jp": "このデッキの内容。",
+    "th": "เนื้อหาของชุดนี้"
+  },
+  "level": "beginner",
+  "tags": ["food", "travel"],
+  "version": 1,
+  "cards": [
+    {
+      "id": "mnd-001",
+      "jp": "いただきます",
+      "en": "Let's eat",
+      "th": "กินข้าวกันเถอะ",
+      "rom": "kin khâao kan thə̀",
+      "note": { "en": "Optional. Shown nowhere yet — reserved for a future detail view." }
+    }
+  ]
+}

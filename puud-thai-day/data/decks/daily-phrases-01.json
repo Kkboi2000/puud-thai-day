@@ -1,0 +1,38 @@
+{
+  "id": "daily-phrases-01",
+  "title": {
+    "en": "Daily Phrases 1",
+    "jp": "日常フレーズ 1",
+    "th": "วลีในชีวิตประจำวัน 1"
+  },
+  "description": {
+    "en": "Reactions and filler phrases you use every day.",
+    "jp": "毎日つかうあいづち・つなぎことば。",
+    "th": "คำอุทานและคำเชื่อมที่ใช้ทุกวัน"
+  },
+  "level": "beginner",
+  "tags": ["daily", "casual", "reactions"],
+  "version": 1,
+  "cards": [
+    { "id": "dp1-01", "jp": "やっぱり！！", "en": "I knew it", "th": "ว่าละ", "rom": "wâa lá" },
+    { "id": "dp1-02", "jp": "どうしよう？", "en": "What should I do?", "th": "เอาไงดี", "rom": "ao ngai dii" },
+    { "id": "dp1-03", "jp": "めんどくさい", "en": "What a pain", "th": "ยุ่งยาก", "rom": "yûng yâak" },
+    { "id": "dp1-04", "jp": "そういえば", "en": "Speaking of which", "th": "จะว่าไป", "rom": "cà wâa pai" },
+    { "id": "dp1-05", "jp": "知らんけど", "en": "Not sure though", "th": "ก็ไม่ชัวร์นะ", "rom": "kɔ̂ɔ mâi chua ná" },
+    { "id": "dp1-06", "jp": "なんかさあ", "en": "Like, you know,", "th": "แบบว่า...", "rom": "bɛ̀ɛp wâa" },
+    { "id": "dp1-07", "jp": "もういいでしょ？", "en": "Isn't that enough?", "th": "พอเหอะ", "rom": "phɔɔ hə̀" },
+    { "id": "dp1-08", "jp": "やめとくわ", "en": "I'll pass", "th": "ไม่อ่ะ", "rom": "mâi à" },
+    { "id": "dp1-09", "jp": "とりま", "en": "For now", "th": "ก่อนอื่น", "rom": "kɔ̀ɔn ʉ̀ʉn", "note": { "en": "Source sheet paired ก่อนอื่น with the reading for สำหรับตอนนี้ (sǎm-ràp tɔɔn-níi). Romanization here matches the Thai script shown.", "jp": "元の表では読みが สำหรับตอนนี้ のものでした。ここではタイ語表記に合わせています。" } },
+    { "id": "dp1-10", "jp": "まあいいか。", "en": "Oh, well", "th": "เออ เอาเถอะ", "rom": "əə ao thə̀" },
+    { "id": "dp1-11", "jp": "それでいいよ。", "en": "That works for me", "th": "ก็ได้นะ", "rom": "kɔ̂ɔ dâai ná" },
+    { "id": "dp1-12", "jp": "お待たせ", "en": "Sorry for the wait", "th": "ขอโทษที่ให้รอ", "rom": "khɔ̌ɔ thôot thîi hâi rɔɔ" },
+    { "id": "dp1-13", "jp": "それで？", "en": "And then?", "th": "แล้วไงต่อ", "rom": "lɛ́ɛo ngai tɔ̀ɔ" },
+    { "id": "dp1-14", "jp": "そんなに？", "en": "That much?", "th": "ขนาดนั้นเลย?", "rom": "khà-nàat nán ləəi" },
+    { "id": "dp1-15", "jp": "すぐ行くよ。", "en": "On my way", "th": "กำลังไป", "rom": "kam-lang pai" },
+    { "id": "dp1-16", "jp": "そろそろ行こうか。", "en": "Shall we?", "th": "ไปกันได้แล้ว", "rom": "pai kan dâai lɛ́ɛo" },
+    { "id": "dp1-17", "jp": "どっちみち", "en": "One way or another", "th": "ไม่ทางใดก็ทางนึง", "rom": "mâi thaang dai kɔ̂ɔ thaang nʉng" },
+    { "id": "dp1-18", "jp": "まぁね", "en": "Well, yeah", "th": "เออ ใช่", "rom": "əə châi" },
+    { "id": "dp1-19", "jp": "そうだね。", "en": "Right.", "th": "ก็ใช่", "rom": "kɔ̂ɔ châi" },
+    { "id": "dp1-20", "jp": "ちょっといい？", "en": "Do you have a sec?", "th": "แปปนึง", "rom": "pɛ́ɛp nʉng" }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "daily-phrases-02",
+  "title": {
+    "en": "Daily Phrases 2",
+    "jp": "日常フレーズ 2",
+    "th": "วลีในชีวิตประจำวัน 2"
+  },
+  "description": {
+    "en": "Short reactions, hedges and warnings.",
+    "jp": "短いリアクション・ぼかし表現・注意のことば。",
+    "th": "คำอุทานสั้น ๆ คำเลี่ยง และคำเตือน"
+  },
+  "level": "beginner",
+  "tags": ["daily", "casual", "reactions"],
+  "version": 1,
+  "cards": [
+    { "id": "dp2-01", "jp": "さっき", "en": "Just now", "th": "ตะกี้", "rom": "tà-kîi" },
+    { "id": "dp2-02", "jp": "もしよければ", "en": "If you want", "th": "ถ้าไม่งั้นก็...", "rom": "thâa mâi ngán kɔ̂ɔ" },
+    { "id": "dp2-03", "jp": "ぜひ", "en": "By all means", "th": "ต้อง...ให้ได้", "rom": "tɔ̂ng ... hâi dâai" },
+    { "id": "dp2-04", "jp": "久しぶり", "en": "It's been a while", "th": "ไม่เจอกันนาน", "rom": "mâi cəə kan naan" },
+    { "id": "dp2-05", "jp": "怪しい", "en": "That's sketchy", "th": "น่าสงสัย", "rom": "nâa sǒng-sǎi" },
+    { "id": "dp2-06", "jp": "痛っ", "en": "Oww.", "th": "โอ๊ย", "rom": "óoi" },
+    { "id": "dp2-07", "jp": "きも", "en": "Eww.", "th": "อี๋", "rom": "ǐi" },
+    { "id": "dp2-08", "jp": "例えば？", "en": "Like what?", "th": "เช่น?", "rom": "chên" },
+    { "id": "dp2-09", "jp": "どっちでもいいよ", "en": "Either one is fine.", "th": "แบบไหนก็ได้", "rom": "bɛ̀ɛp nǎi kɔ̂ɔ dâai" },
+    { "id": "dp2-10", "jp": "できれば", "en": "If possible", "th": "ถ้าเป็นไปได้", "rom": "thâa pen pai dâai" },
+    { "id": "dp2-11", "jp": "さすが", "en": "As expected", "th": "สมกับที่", "rom": "sǒm kàp thîi" },
+    { "id": "dp2-12", "jp": "危ない！", "en": "Watch out!", "th": "ระวัง!", "rom": "rá-wang" },
+    { "id": "dp2-13", "jp": "落ち着いて", "en": "Calm down.", "th": "ใจเย็น", "rom": "cai yen" },
+    { "id": "dp2-14", "jp": "ハマる", "en": "Obsessed with", "th": "อิน", "rom": "in" },
+    { "id": "dp2-15", "jp": "逆に", "en": "In contrast", "th": "กลับกัน", "rom": "klàp kan" },
+    { "id": "dp2-16", "jp": "ギリギリ", "en": "Just in time", "th": "ฉิวเฉียด", "rom": "chǐw chìat" },
+    { "id": "dp2-17", "jp": "微妙", "en": "Can't tell", "th": "พูดยาก", "rom": "phûut yâak" },
+    { "id": "dp2-18", "jp": "てかさ", "en": "You know what?", "th": "คืองี้", "rom": "khʉʉ ngíi" },
+    { "id": "dp2-19", "jp": "当たり前じゃん。", "en": "Obviously", "th": "แน่อยู่ละ", "rom": "nɛ̂ɛ yùu là" },
+    { "id": "dp2-20", "jp": "冗談", "en": "Just kidding", "th": "ล้อเล่น", "rom": "lɔ́ɔ lên" }
+  ]
+}

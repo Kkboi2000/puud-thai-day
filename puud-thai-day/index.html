@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" data-ui-lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>PuudThaiDay · พูดไทยเดย์</title>
+<meta name="description" content="A Thai phrase quiz for everyday talk — Japanese, English, Thai script and romanization, your way." />
+<meta name="theme-color" content="#050C1F" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;800&family=Noto+Sans+Thai:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/theme.css" />
+</head>
+<body>
+
+<!-- ─── ambient background ─────────────────────────────────────── -->
+<div class="bg" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow--a"></div>
+  <div class="bg-glow bg-glow--b"></div>
+  <div class="bg-kanok"></div>
+</div>
+
+<!-- ─── top bar ────────────────────────────────────────────────── -->
+<header class="topbar" id="topbar" hidden>
+  <button class="brand" id="btn-home" type="button" title="PuudThaiDay">
+    <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><use href="#kanok-mark" /></svg>
+    <span class="brand-text">Puud<span class="brand-text--accent">Thai</span>Day</span>
+  </button>
+  <div class="topbar-right">
+    <span class="chip chip--who" id="who-chip" hidden></span>
+    <button class="icon-btn" id="btn-settings" type="button" aria-label="Settings" title="Settings">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-gear" /></svg>
+    </button>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- ─── 1. TITLE ─────────────────────────────────────────────── -->
+  <section class="screen screen--title is-active" id="screen-title">
+    <div class="hero">
+      <svg class="hero-mark" viewBox="0 0 40 40" aria-hidden="true"><use href="#kanok-mark" /></svg>
+      <h1 class="hero-title">
+        <span class="hero-title-th">พูดไทยเดย์</span>
+        <span class="hero-title-en">Puud<span class="accent">Thai</span>Day</span>
+      </h1>
+      <p class="hero-tag" data-i18n="tagline">Everyday Thai, one phrase at a time.</p>
+      <p class="hero-sub" data-i18n="taglineSub">日本語 · English · ไทย</p>
+    </div>
+
+    <div class="gate">
+      <button class="gate-card gate-card--guest" id="btn-guest" type="button">
+        <svg class="gate-ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-guest" /></svg>
+        <span class="gate-label" data-i18n="playAsGuest">Play as Guest</span>
+        <span class="gate-note" data-i18n="guestNote">Jump straight in. Nothing is saved.</span>
+      </button>
+
+      <div class="gate-card gate-card--user" id="gate-user">
+        <svg class="gate-ico gate-ico--gold" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-user" /></svg>
+        <span class="gate-label" data-i18n="playAsUser">Play as User</span>
+        <span class="gate-note" data-i18n="userNote">Every result is saved to your history on this device.</span>
+        <div class="gate-form">
+          <input class="field" id="input-name" type="text" maxlength="24" autocomplete="off"
+                 placeholder="Your name" data-i18n-attr="placeholder:yourName" />
+          <button class="btn btn--primary" id="btn-user-go" type="button" data-i18n="start">Start</button>
+        </div>
+        <div class="gate-profiles" id="gate-profiles" hidden>
+          <span class="muted small" data-i18n="orContinue">or continue as</span>
+          <div class="profile-chips" id="profile-chips"></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="hero-foot small muted">
+      <span data-i18n="footHint">Runs entirely in your browser · no account, no server</span>
+    </p>
+  </section>
+
+  <!-- ─── 2. SETUP ─────────────────────────────────────────────── -->
+  <section class="screen screen--setup" id="screen-setup">
+    <div class="screen-head">
+      <h2 class="screen-title" data-i18n="gameSetup">Game Setup</h2>
+      <div class="screen-head-actions">
+        <button class="btn btn--ghost" id="btn-setup-history" type="button" hidden>
+          <span aria-hidden="true">📊</span> <span data-i18n="history">History</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3 class="panel-title"><span class="panel-num">01</span> <span data-i18n="chooseDecks">Word lists</span></h3>
+      <p class="panel-hint" data-i18n="chooseDecksHint">Pick one or more. Add your own by dropping a JSON file into <code>data/decks/</code>.</p>
+      <div class="deck-grid" id="deck-grid"></div>
+      <p class="panel-foot small muted"><span id="pool-count">0</span> <span data-i18n="phrasesInPool">phrases in pool</span></p>
+    </div>
+
+    <div class="panel">
+      <h3 class="panel-title"><span class="panel-num">02</span> <span data-i18n="rounds">Questions &amp; time</span></h3>
+      <div class="opt-row">
+        <label class="opt-label" data-i18n="numQuestions">Number of questions</label>
+        <div class="seg" id="seg-count" role="group"></div>
+      </div>
+      <div class="opt-row">
+        <label class="opt-label" data-i18n="timeLimit">Time per question</label>
+        <div class="seg" id="seg-timer" role="group"></div>
+      </div>
+      <div class="opt-row">
+        <label class="opt-label" data-i18n="choices">Choices per question</label>
+        <div class="seg" id="seg-choices" role="group"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3 class="panel-title"><span class="panel-num">03</span> <span data-i18n="quizDirection">Quiz direction</span></h3>
+      <p class="panel-hint" data-i18n="quizDirectionHint">Mix and match freely. Choose 🎲 Mixed to reshuffle on every question.</p>
+      <div class="opt-row">
+        <label class="opt-label" data-i18n="askWith">Ask with</label>
+        <div class="seg seg--wrap" id="seg-prompt" role="group"></div>
+      </div>
+      <div class="dir-arrow" aria-hidden="true">↓</div>
+      <div class="opt-row">
+        <label class="opt-label" data-i18n="answerIn">Answer in</label>
+        <div class="seg seg--wrap" id="seg-answer" role="group"></div>
+      </div>
+      <p class="warn" id="dir-warn" hidden data-i18n="dirWarn">Ask and answer can't be the same language — pick another.</p>
+    </div>
+
+    <div class="panel">
+      <h3 class="panel-title"><span class="panel-num">04</span> <span data-i18n="voice">Voice sample</span></h3>
+      <div class="opt-row">
+        <label class="opt-label" data-i18n="voiceMode">Thai audio</label>
+        <div class="seg" id="seg-voice" role="group"></div>
+      </div>
+      <div class="opt-row">
+        <label class="opt-label" data-i18n="voiceTest">Test it</label>
+        <button class="btn btn--ghost" id="btn-voice-test" type="button">
+          <span aria-hidden="true">🔊</span> <span class="th">สวัสดี</span>
+        </button>
+      </div>
+      <p class="warn" id="voice-warn" hidden data-i18n="voiceWarn">No Thai voice found in this browser. Chrome or Edge on desktop usually has one.</p>
+    </div>
+
+    <div class="actions actions--sticky">
+      <button class="btn btn--ghost" id="btn-setup-back" type="button" data-i18n="back">Back</button>
+      <button class="btn btn--primary btn--lg" id="btn-start" type="button">
+        <span data-i18n="startGame">Start game</span> <span aria-hidden="true">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ─── 3. PLAY ──────────────────────────────────────────────── -->
+  <section class="screen screen--play" id="screen-play">
+    <div class="hud">
+      <button class="icon-btn icon-btn--sm" id="btn-quit" type="button" aria-label="Quit">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-x" /></svg>
+      </button>
+      <div class="hud-progress">
+        <div class="hud-meta">
+          <span class="mono" id="hud-index">1 / 10</span>
+          <span class="hud-score mono" id="hud-score">0</span>
+        </div>
+        <div class="bar"><div class="bar-fill" id="hud-bar"></div></div>
+      </div>
+      <div class="timer" id="timer" hidden>
+        <svg viewBox="0 0 44 44" aria-hidden="true">
+          <circle class="timer-track" cx="22" cy="22" r="19" />
+          <circle class="timer-run" cx="22" cy="22" r="19" id="timer-run" />
+        </svg>
+        <span class="timer-num mono" id="timer-num">10</span>
+      </div>
+    </div>
+
+    <div class="streak" id="streak" hidden><span aria-hidden="true">🔥</span> <span id="streak-num">0</span></div>
+
+    <div class="q-card" id="q-card">
+      <span class="q-kicker mono" id="q-kicker">JP → TH</span>
+      <div class="phrase phrase--lg" id="q-phrase"></div>
+      <button class="btn btn--speak" id="btn-speak" type="button" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-speaker" /></svg>
+        <span data-i18n="hearIt">Hear it</span>
+      </button>
+    </div>
+
+    <div class="choices" id="choices"></div>
+
+    <div class="reveal" id="reveal" hidden>
+      <div class="reveal-verdict" id="reveal-verdict"></div>
+      <div class="reveal-card phrase" id="reveal-card"></div>
+      <button class="btn btn--primary btn--lg" id="btn-next" type="button">
+        <span data-i18n="next">Next</span> <span aria-hidden="true">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ─── 4. SUMMARY ───────────────────────────────────────────── -->
+  <section class="screen screen--summary" id="screen-summary">
+    <h2 class="screen-title center" id="sum-headline" data-i18n="roundComplete">Round complete</h2>
+
+    <div class="score-ring-wrap">
+      <svg class="score-ring" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="ring-track" cx="60" cy="60" r="52" />
+        <circle class="ring-run" cx="60" cy="60" r="52" id="ring-run" />
+      </svg>
+      <div class="score-ring-mid">
+        <span class="score-big mono" id="sum-score">0</span>
+        <span class="score-of mono" id="sum-of">/ 0</span>
+      </div>
+    </div>
+    <p class="sum-grade" id="sum-grade"></p>
+
+    <div class="stat-grid">
+      <div class="stat"><span class="stat-num mono" id="sum-pct">0%</span><span class="stat-key" data-i18n="accuracy">Accuracy</span></div>
+      <div class="stat"><span class="stat-num mono" id="sum-time">0.0s</span><span class="stat-key" data-i18n="avgTime">Avg time</span></div>
+      <div class="stat"><span class="stat-num mono" id="sum-streak">0</span><span class="stat-key" data-i18n="bestStreak">Best streak</span></div>
+    </div>
+
+    <div class="panel" id="sum-review-panel" hidden>
+      <h3 class="panel-title"><span data-i18n="reviewThese">Review these</span></h3>
+      <div class="review-list" id="sum-review"></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn--ghost" id="btn-sum-back" type="button" data-i18n="backToSetup">Back to setup</button>
+      <button class="btn btn--primary btn--lg" id="btn-sum-main" type="button" data-i18n="playAgain">Play again</button>
+    </div>
+  </section>
+
+  <!-- ─── 5. HISTORY ───────────────────────────────────────────── -->
+  <section class="screen screen--history" id="screen-history">
+    <div class="screen-head">
+      <h2 class="screen-title" data-i18n="scoreHistory">Score History</h2>
+      <div class="screen-head-actions">
+        <button class="btn btn--ghost btn--sm" id="btn-export" type="button" data-i18n="export">Export</button>
+        <button class="btn btn--ghost btn--sm danger" id="btn-clear" type="button" data-i18n="clear">Clear</button>
+      </div>
+    </div>
+
+    <div class="stat-grid stat-grid--4" id="hist-stats"></div>
+
+    <div class="panel">
+      <h3 class="panel-title"><span data-i18n="lastSessions">Last 12 rounds</span></h3>
+      <div class="spark" id="hist-spark"></div>
+    </div>
+
+    <div class="panel">
+      <h3 class="panel-title"><span data-i18n="allRounds">All rounds</span></h3>
+      <div class="hist-list" id="hist-list"></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn--ghost" id="btn-hist-back" type="button" data-i18n="back">Back</button>
+      <button class="btn btn--primary" id="btn-hist-play" type="button" data-i18n="playAgain">Play again</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ─── settings modal ───────────────────────────────────────── -->
+<div class="modal" id="modal-settings" hidden>
+  <div class="modal-scrim" data-close="1"></div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <div class="modal-head">
+      <h2 class="modal-title" id="settings-title"><span aria-hidden="true">⚙️</span> <span data-i18n="settings">Settings</span></h2>
+      <button class="icon-btn icon-btn--sm" data-close="1" aria-label="Close" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-x" /></svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <section class="set-block">
+        <h3 class="set-title" data-i18n="interfaceLang">Interface language</h3>
+        <div class="seg" id="seg-ui-lang" role="group"></div>
+      </section>
+
+      <section class="set-block">
+        <h3 class="set-title" data-i18n="displayLayers">Phrase display</h3>
+        <p class="panel-hint" data-i18n="displayLayersHint">One main line, any number of sub lines. Sub lines sit above ▲ or below ▼ the main.</p>
+
+        <div class="opt-row">
+          <label class="opt-label" data-i18n="mainLine">Main line</label>
+          <div class="seg" id="seg-main-lang" role="group"></div>
+        </div>
+
+        <div class="layer-list" id="layer-list"></div>
+
+        <div class="preview" id="layer-preview-wrap">
+          <span class="preview-tag mono" data-i18n="preview">PREVIEW</span>
+          <div class="phrase phrase--lg" id="layer-preview"></div>
+        </div>
+      </section>
+
+      <section class="set-block">
+        <h3 class="set-title" data-i18n="thaiVoice">Thai voice</h3>
+        <select class="field" id="voice-select"></select>
+        <div class="opt-row">
+          <label class="opt-label" data-i18n="speed">Speed</label>
+          <input class="range" id="voice-rate" type="range" min="0.5" max="1.2" step="0.05" value="0.9" />
+          <span class="mono small" id="voice-rate-val">0.90×</span>
+        </div>
+      </section>
+
+      <section class="set-block">
+        <h3 class="set-title" data-i18n="profile">Profile</h3>
+        <div class="opt-row">
+          <span class="muted" id="set-profile-name">—</span>
+          <button class="btn btn--ghost btn--sm" id="btn-switch-user" type="button" data-i18n="switchUser">Switch user</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal-foot">
+      <button class="btn btn--primary" data-close="1" type="button" data-i18n="done">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── toast ────────────────────────────────────────────────── -->
+<div class="toast" id="toast" hidden></div>
+
+<!-- ─── svg sprite ───────────────────────────────────────────── -->
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <!-- kanok: the Thai flame motif, drawn as one continuous curl -->
+    <symbol id="kanok-mark" viewBox="0 0 40 40">
+      <path d="M21.6 2.4c.9 5.5-.7 9.4-3.4 12.9-2.4 3.1-3.6 5.9-2.8 8.8.5 1.9 2 3.3 3.8 3.5 1.9.2 3.5-1 3.9-2.7.3-1.5-.3-2.9-1.6-3.6 2.7-.2 4.8 1.4 5.4 3.8.9 3.7-1.6 7.4-5.4 8.4-4.7 1.2-9.4-1.5-10.9-6-1.7-5.1.6-9.6 3.9-13.6C17.1 10.5 20 7.4 21.6 2.4z"/>
+      <path d="M29.6 9.7c3.2 3.3 4.4 7.3 3.7 11.5-.3-2.4-1.3-4.4-2.9-6.1.4 3.6-.7 6.6-3.1 9 .8-3.2.5-6-1-8.6 1.6-1.5 2.7-3.4 3.3-5.8z" opacity=".72"/>
+      <path d="M9.4 30.9c2.3 2.8 5.3 4.4 8.9 4.7-2.1.9-4.3 1-6.5.4 2.6 1.8 5.5 2.4 8.7 1.8-3.1 1.4-6.1 1.4-9-.1-1.1-1.8-1.8-4-2.1-6.8z" opacity=".72"/>
+    </symbol>
+    <symbol id="ico-gear" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+        d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5v.2a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1h.2a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/>
+    </symbol>
+    <symbol id="ico-x" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/>
+    </symbol>
+    <symbol id="ico-guest" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+        d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M4.5 20a7.5 7.5 0 0 1 15 0"/>
+    </symbol>
+    <symbol id="ico-user" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 2.6l2.7 5.6 6.1.8-4.5 4.3 1.2 6.1-5.5-3-5.5 3 1.2-6.1L3.2 9l6.1-.8L12 2.6z"/>
+    </symbol>
+    <symbol id="ico-speaker" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+        d="M4 9v6h4l5 4V5L8 9H4z M16.5 8.5a5 5 0 0 1 0 7 M19.5 5.5a9 9 0 0 1 0 13"/>
+    </symbol>
+  </defs>
+</svg>
+
+<script type="module" src="assets/js/app.js"></script>
+<noscript><p style="padding:2rem;color:#fff">PuudThaiDay needs JavaScript enabled.</p></noscript>
+</body>
+</html>
